@@ -1,5 +1,59 @@
+:root {
+  --primaryClr: green;
+  --secondaryClr: lightGreen;
+  --trClr: yellow;
+}
+
+body {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 .arbutus-regular {
   font-family: "Arbutus", serif;
   font-weight: 400;
   font-style: normal;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  background: linear-gradient(var(--trClr), var(--primaryClr));
+  min-height: 100vh;
+}
+
+.calculator {
+  background: rgba(141, 136, 136, 0.89);
+  width: 400px;
+  padding: 2rem 1.5rem;
+  border-radius: 10px;
+
+  display: grid;
+  gap: 1rem;
+  grid-template-areas: "";
+}
+
+.display {
+  background: var(--secondaryClr);
+  padding: 1rem;
+  font-size: 1.5rem;
+  text-align: end;
+  font-weight: bolder;
+  box-shadow: 0 10px 5px rgba(128, 128, 128, 0.788);
+}
+
+.calculator .btn {
+  background: var(--trClr);
+  height: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
