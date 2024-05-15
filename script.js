@@ -5,7 +5,13 @@ const displayElm = document.querySelector(".display");
 
 const operators = ["%", "/", "*", "+", "-", "="];
 
+let lastOperator = "";
+
+//Load the audio
+const audio = new Audio("./assets/surprise.mp3");
+
 const buttonAction = (value) => {
+  displayElm.classList.remove("prank");
   console.log(value);
 
   if (value === "AC") {
@@ -19,6 +25,7 @@ const buttonAction = (value) => {
   }
 
   if (value === "=") {
+    lastOperator = "";
     //get the last char
     const lastChar = strToDisplay[strToDisplay.length - 1];
 
@@ -33,10 +40,25 @@ const buttonAction = (value) => {
   // show only last clicked operator
 
   if (operators.includes(value)) {
+    lastOperator = value;
     const lastChar = strToDisplay[strToDisplay.length - 1];
 
     if (operators.includes(lastChar)) {
       strToDisplay = strToDisplay.slice(0, -1);
+    }
+  }
+
+  // Allowing only one dot per number set
+
+  if (value === ".") {
+    const lastOperatorIndex = strToDisplay.lastIndexOf(lastOperator);
+    const lastNumberSet = strToDisplay.slice(lastOperatorIndex);
+    if (lastNumberSet.includes(".")) {
+      return;
+    }
+
+    if (!lastOperator && strToDisplay.includes(".")) {
+      return;
     }
   }
 
@@ -63,10 +85,22 @@ const display = (str) => {
 //Calculate total
 
 const displayTotal = () => {
+  const extraValue = randomValue();
+  if (extraValue) {
+    displayElm.classList.add("prank");
+    audio.play();
+  }
+
   const total = eval(strToDisplay);
 
   strToDisplay = total.toString();
   //   console.log(total);
 
   display(strToDisplay);
+};
+
+const randomValue = () => {
+  const num = Math.round(Math.random() * 10);
+
+  return num < 4 ? num : 0;
 };
