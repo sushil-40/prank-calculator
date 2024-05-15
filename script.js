@@ -24,7 +24,7 @@ const buttonAction = (value) => {
     return display(strToDisplay);
   }
 
-  if (value === "=") {
+  if (value === "=" || value === "Enter") {
     lastOperator = "";
     //get the last char
     const lastChar = strToDisplay[strToDisplay.length - 1];
@@ -108,3 +108,14 @@ const randomValue = () => {
 
   return num < 4 ? num : 0;
 };
+
+// Binding keyoard with browser app
+document.addEventListener("keypress", (e) => {
+  console.log(e.code);
+  const value = e.key;
+
+  if (e.code.includes("Key")) {
+    return;
+  }
+  buttonAction(value);
+});
