@@ -44,6 +44,8 @@ body {
     "btn4 btn5 btn6 minus"
     "btn1 btn2 btn3 plus"
     "btn0 dot equal equal";
+
+  transform: perspective(70rem) rotateX(30deg);
 }
 
 .display {
