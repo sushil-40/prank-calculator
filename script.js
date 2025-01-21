@@ -1,9 +1,9 @@
 const allButtonsElm = document.querySelectorAll(".btn");
-// console.log(allButtonsElm);
+
 let strToDisplay = "";
 const displayElm = document.querySelector(".display");
 
-const operators = ["%", "/", "*", "+", "-", "="];
+const operators = ["%", "/", "*", "-", "+"];
 
 let lastOperator = "";
 
@@ -12,7 +12,6 @@ const audio = new Audio("./assets/surprise.mp3");
 
 const buttonAction = (value) => {
   displayElm.classList.remove("prank");
-  console.log(value);
 
   if (value === "AC") {
     strToDisplay = "";
@@ -38,9 +37,9 @@ const buttonAction = (value) => {
   }
 
   // show only last clicked operator
-
   if (operators.includes(value)) {
     lastOperator = value;
+    //get the last char
     const lastChar = strToDisplay[strToDisplay.length - 1];
 
     if (operators.includes(lastChar)) {
@@ -48,12 +47,14 @@ const buttonAction = (value) => {
     }
   }
 
-  // Allowing only one dot per number set
+  //handle the dot click
 
   if (value === ".") {
     const lastOperatorIndex = strToDisplay.lastIndexOf(lastOperator);
-    const lastNumberSet = strToDisplay.slice(lastOperatorIndex);
-    if (lastNumberSet.includes(".")) {
+
+    const lastNumebrSet = strToDisplay.slice(lastOperatorIndex);
+
+    if (lastNumebrSet.includes(".")) {
       return;
     }
 
@@ -67,27 +68,25 @@ const buttonAction = (value) => {
   display(strToDisplay);
 };
 
-//attach click event to all the buttons
+//attache click event to all the buttons
 allButtonsElm.forEach((btn) => {
   btn.addEventListener("mousedown", () => {
     btn.style.scale = ".9";
   });
 
-  //   console.log(btn.innerText);
   btn.addEventListener("click", () => {
+    btn.style.scale = "1";
     const value = btn.innerText;
     buttonAction(value);
   });
 });
 
-//update clicked button vlaue to display area
-
+// update clicked button value to display area
 const display = (str) => {
   displayElm.innerText = str || "0.0";
 };
 
-//Calculate total
-
+// calculate total
 const displayTotal = () => {
   const extraValue = randomValue();
   if (extraValue) {
@@ -95,25 +94,21 @@ const displayTotal = () => {
     audio.play();
   }
 
-  const total = eval(strToDisplay);
+  const total = eval(strToDisplay) + extraValue;
 
   strToDisplay = total.toString();
-  //   console.log(total);
-
   display(strToDisplay);
 };
 
 const randomValue = () => {
-  const num = Math.round(Math.random() * 10);
-
+  const num = Math.round(Math.random() * 10); // 0 - 10
   return num < 4 ? num : 0;
 };
 
-// Binding keyoard with browser app
+// Binding keyboard with browser app
 document.addEventListener("keypress", (e) => {
-  console.log(e.code);
+  console.log(e);
   const value = e.key;
-
   if (e.code.includes("Key")) {
     return;
   }
